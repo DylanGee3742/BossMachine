@@ -17,8 +17,10 @@ app.use(bodyParser.json())
 
 // Mount your existing apiRouter below at the '/api' path.
 const apiMinionRouter = require('./server/apiMinions');
+app.use('/api/minions', apiMinionRouter);
 
-app.use('/api', apiMinionRouter);
+const apiIdeasRouter = require('./server/apiIdeas')
+app.use('/api/ideas', apiIdeasRouter)
 
 // This conditional is here for testing purposes:
 if (!module.parent) { 
