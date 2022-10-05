@@ -3,52 +3,45 @@ const apiRouter = express.Router();
 const { getAllFromDatabase } = require('./db');
 const { isMinionValid } = require('./functions');
 
-const minions = getAllFromDatabase('minions')
+const minions = getAllFromDatabase('minions');
 
 // /api/minions
 apiRouter
-.route('/minions')
+.route('/')
 .get((req, res) => {
-    res.send(minions)
+    res.send(minions);
 })
 .post((req, res) => {
-    const minion = {
-        id: minions.length + 1,
-        name: req.body.name,
-        title: req.body.title,
-        weaknesses: req.body.weaknesses,
-        salary: req.body.salary,
-    }
+    const minion = req.body
     if (isMinionValid(minion)) {
         minions.push(minion);
-        res.status(201).send('Created')
+        res.status(201).send('Created');
     } else {
-        res.status(422).send('Not a valid entry')
+        res.status(422).send('Not a valid entry');
     }
 })
 
 // /api/minions/:minionId
 
 apiRouter.param("minionId", (req, res, next, minionId) => {
-    const minionIndex = minions.findIndex(minion => minion.id === minionId)
+    const minionIndex = minions.findIndex(minion => minion.id === minionId);
     if (minionIndex !== -1) {
-    req.minionIndex = minionIndex
-    req.minion = minions[minionIndex]
-    console.log(req.minion)
+    req.minionIndex = minionIndex;
+    req.minion = minions[minionIndex];
     next();
     } else {
-        res.status(404).send('Not Found')
+        res.status(404).send('Not Found');
     }
 });
 
 apiRouter
-.route('/minions/:minionId')
+.route('/:minionId')
 .get((req, res) => {
-    res.send(req.minion)
+    res.send(req.minion);
 })
 .put((req, res) => {
-    minions[req.minionIndex] = req.body
-    res.send(minions[req.minionIndex])
+    minions[req.minionIndex] = req.body;
+    res.send(minions[req.minionIndex]);
 })
 .delete((req, res) => {
     minions.splice(req.minionIndex, 1);
