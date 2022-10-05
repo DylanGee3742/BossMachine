@@ -16,9 +16,9 @@ app.use(cors())
 app.use(bodyParser.json())
 
 // Mount your existing apiRouter below at the '/api' path.
-const apiRouter = require('./server/api');
+const apiMinionRouter = require('./server/apiMinions');
 
-app.use('/api', apiRouter);
+app.use('/api', apiMinionRouter);
 
 // This conditional is here for testing purposes:
 if (!module.parent) { 
