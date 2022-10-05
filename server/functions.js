@@ -12,4 +12,20 @@ const isMinionValid = (minion) => {
     return isValid
 };
 
-module.exports = { isMinionValid }
+const isIdeaValid = (idea) => {
+    let isValid;
+    if  (
+        (idea.name && typeof idea.name === 'string') &&
+        (idea.description && typeof idea.description === 'string') &&
+        (idea.weeklyRevenue && typeof idea.weeklyRevenue === 'number') &&
+        (idea.numWeeks && typeof idea.numWeeks === 'number')
+    ) 
+     {
+         isValid = true;
+    } else {
+         isValid = false
+    }
+    return isValid
+};
+
+module.exports = { isMinionValid, isIdeaValid }
