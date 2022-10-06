@@ -1,4 +1,5 @@
 const express = require('express');
+const { Redirect } = require('react-router');
 const apiRouter = express.Router();
 const { getAllFromDatabase } = require('./db');
 const { isMinionValid } = require('./functions');
@@ -12,7 +13,13 @@ apiRouter
     res.send(minions);
 })
 .post((req, res) => {
-    const minion = req.body
+    const minion = {
+        id: minions.length + 1,
+        name: req.body.name,
+        title: req.body.title,
+        weaknesses: req.body.weaknesses,
+        salary: req.body.salary
+    }
     if (isMinionValid(minion)) {
         minions.push(minion);
         res.status(201).send('Created');
@@ -20,6 +27,7 @@ apiRouter
         res.status(422).send('Not a valid entry');
     }
 })
+
 
 // /api/minions/:minionId
 
