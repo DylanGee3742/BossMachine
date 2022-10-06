@@ -2,6 +2,7 @@ const express = require('express');
 const apiRouter = express.Router();
 const { getAllFromDatabase } = require('./db');
 const { isIdeaValid } = require('./functions');
+const checkMillionDollarIdea = require('./checkMillionDollarIdea');
 
 const ideas = getAllFromDatabase('ideas');
 
@@ -11,7 +12,7 @@ apiRouter
 .get((req, res) => {
     res.send(ideas);
 })
-.post((req, res) => {
+.post(checkMillionDollarIdea, (req, res) => {
     const idea = {
         id: ideas.length + 1,
         name: req.body.name,
@@ -45,7 +46,7 @@ apiRouter
 .get((req, res) => {
     res.send(req.idea)
 })
-.put((req, res) => {
+.put(checkMillionDollarIdea, (req, res) => {
     ideas[req.ideaIndex] = req.body;
     res.send(ideas[req.ideaIndex])
 })
